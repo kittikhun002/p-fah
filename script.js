@@ -8,18 +8,18 @@
 // 1. CONFIGURATION & LOCAL STORAGE
 // ==========================================
 const DEFAULT_CONFIG = {
-  myName: 'เพชร',
+  myName: 'น้องเพชร',
   loverName: 'พี่ฟ้า',
   annivDate: '2026-07-29',
-  letterContent: `ถึง พี่ฟ้า คนน่ารักของเพชร,
+  letterContent: `ถึง พี่ฟ้า คนน่ารักของน้องเพชร,
 
-ตั้งแต่วันแรกที่เราได้เริ่มคุยกัน (29 กรกฎาคม) โลกของเพชรก็เปลี่ยนไป มีแต่ความสดใส รอยยิ้ม และความสุขในทุกๆ วันที่ได้คุยกับพี่ฟ้า
+ตั้งแต่วันแรกที่เราได้เริ่มคุยกันโลกของน้องเพชรก็เปลี่ยนไป มีแต่ความสดใส รอยยิ้ม และความอบอุ่นในใจทุกครั้งที่ได้คุยกับพี่ฟ้า
 
-ทุกครั้งที่ได้อ่านข้อความ ได้ฟังเรื่องเล่า หรือได้ยินเสียงหัวเราะของพี่ฟ้า มันทำให้วันธรรมดาวันนึงกลายเป็นวันที่พิเศษและอบอุ่นหัวใจมากๆ เสมอ
+ขอบคุณสำหรับทุกๆ บทสนทนาที่เราได้คุยกันน้าา และความน่ารักที่พี่ฟ้ามอบให้น้องเพชรเสมอมา 
 
-ขอบคุณสำหรับความน่ารัก ความใส่ใจ และพลังบวกที่พี่ฟ้ามอบให้เพชรเสมอนะครับ ยิ่งได้รู้จักพี่ฟ้า ก็ยิ่งรู้สึกว่าพี่ฟ้าเป็นคนที่พิเศษมากๆ
+บางทีผมอาจจะขึ้น้อยใจไปบ้าง ก็ไม่บ้างหรอกครับเยอะเลย แต่น้องเพชรก็รักพี่ฟ้าน้าา อยากอยู่กับพี่ฟ้าไปนานๆเลยย พิมพ์แล้วก็เขิน อิอิ แต่ก็เป็นเรื่องจริงจากใจน้องเพชรน้าา 
 
-เพชรตั้งใจทำเว็บนี้ขึ้นมาเพื่อเซอร์ไพรส์ และอยากให้พี่ฟ้าได้ยิ้มกว้างๆ ในวันนี้นะครับ ให้เพชรคอยอยู่คุยและเป็นรอยยิ้มให้พี่ฟ้าต่อไปนะ ✨❤️`
+พี่เป็นคนที่อบอุ่นมากก อยู่เป็นเพื่อนผมได้ตลอดเลย เวลาเล่าอะไรให้พี่ฟังพี่ก็รับฟังเสมอนี่แหละพี่ผมชอบพี่ ชอบมากๆๆๆๆๆๆ ก ไก่ล้านตัว รักพี่ฟ้า รักพี่ฟ้าา`
 };
 
 let config = { ...DEFAULT_CONFIG };
@@ -27,9 +27,11 @@ let config = { ...DEFAULT_CONFIG };
 // Load saved config if exists
 function loadConfig() {
   try {
-    const saved = localStorage.getItem('romantic_web_config');
+    const saved = localStorage.getItem('romantic_web_config_v2');
     if (saved) {
       config = { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
+    } else {
+      config = { ...DEFAULT_CONFIG };
     }
   } catch (e) {
     console.warn('Could not load config from localStorage', e);
@@ -39,7 +41,7 @@ function loadConfig() {
 
 function saveConfig() {
   try {
-    localStorage.setItem('romantic_web_config', JSON.stringify(config));
+    localStorage.setItem('romantic_web_config_v2', JSON.stringify(config));
   } catch (e) {
     console.warn('Could not save config to localStorage', e);
   }
@@ -497,6 +499,13 @@ const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCaption = document.getElementById('lightbox-caption');
 const lightboxClose = document.getElementById('lightbox-close');
 
+const defaultPhotos = [
+  'assets/photo1.jpg',
+  'assets/photo2.jpg',
+  'assets/photo3.jpg',
+  'assets/photo4.jpg'
+];
+
 let savedPhotos = [];
 
 function loadSavedPhotos() {
@@ -512,18 +521,21 @@ function loadSavedPhotos() {
   for (let i = 0; i < 4; i++) {
     const frame = document.getElementById(`frame-${i}`);
     const img = document.getElementById(`img-${i}`);
-    const ph = frame.querySelector('.placeholder-box');
+    const ph = frame ? frame.querySelector('.placeholder-box') : null;
+    const photoUrl = (savedPhotos && savedPhotos[i]) ? savedPhotos[i] : defaultPhotos[i];
 
-    if (savedPhotos[i]) {
-      img.src = savedPhotos[i];
-      img.classList.remove('hidden');
-      frame.classList.remove('empty');
-      if (ph) ph.style.display = 'none';
-    } else {
-      img.src = '';
-      img.classList.add('hidden');
-      frame.classList.add('empty');
-      if (ph) ph.style.display = 'flex';
+    if (img) {
+      if (photoUrl) {
+        img.src = photoUrl;
+        img.classList.remove('hidden');
+        if (frame) frame.classList.remove('empty');
+        if (ph) ph.style.display = 'none';
+      } else {
+        img.src = '';
+        img.classList.add('hidden');
+        if (frame) frame.classList.add('empty');
+        if (ph) ph.style.display = 'flex';
+      }
     }
   }
 }
@@ -544,12 +556,13 @@ polaroidItems.forEach(item => {
   const caption = item.getAttribute('data-caption');
 
   item.addEventListener('click', (e) => {
-    // If empty or user clicked on placeholder, open file picker
-    if (!savedPhotos[index]) {
+    const currentPhoto = (savedPhotos && savedPhotos[index]) ? savedPhotos[index] : defaultPhotos[index];
+    // If empty, open file picker
+    if (!currentPhoto) {
       fileInput.click();
     } else {
       // If photo exists, open lightbox
-      lightboxImg.src = savedPhotos[index];
+      lightboxImg.src = currentPhoto;
       if (caption && caption.trim() !== '') {
         lightboxCaption.textContent = caption;
         lightboxCaption.style.display = 'block';
