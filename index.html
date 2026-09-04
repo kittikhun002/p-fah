@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ของขวัญและรอยยิ้มพิเศษจากน้องเพชร</title>
+  <meta name="description" content="เว็บไซต์เซอร์ไพรส์พี่ฟ้า รวมความรู้สึกดีๆ และรอยยิ้มที่มีให้กันเสมอ">
+
+  <!-- Google Fonts: Mitr, Mali, Prompt, Great Vibes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mali:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Mitr:wght@300;400;500;600&family=Prompt:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background Animated Elements -->
+  <div class="bg-gradient-mesh"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ==================== 1. INTRO / GIFT BOX SCREEN ==================== -->
+  <div id="gift-overlay" class="gift-overlay">
+    <div class="gift-container">
+      <div class="sparkle-badge">✨ มีของขวัญและรอยยิ้มมาส่ง ✨</div>
+      <h1 class="gift-title">สำหรับ "พี่ฟ้า" คนน่ารัก</h1>
+      <p class="gift-subtitle">มีบางสิ่งอยากบอกพี่ฟ้า... ลองแตะที่กล่องของขวัญดูสิครับ 🎁</p>
+
+      <!-- Interactive 3D Gift Box -->
+      <div class="gift-box-wrapper" id="gift-box-btn" role="button" aria-label="แตะเพื่อเปิดของขวัญ">
+        <div class="gift-box">
+          <div class="gift-lid">
+            <div class="ribbon-bow">
+              <div class="bow-left"></div>
+              <div class="bow-right"></div>
+              <div class="bow-knot"></div>
+            </div>
+            <div class="lid-ribbon"></div>
+          </div>
+          <div class="gift-body">
+            <div class="body-ribbon-vertical"></div>
+            <div class="body-ribbon-horizontal"></div>
+            <div class="heart-seal">💌</div>
+          </div>
+        </div>
+        <div class="click-pulse-hint">
+          <span>👆 แตะเพื่อเปิดอ่านความในใจ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+  <div id="main-content" class="main-content hidden">
+
+    <!-- Floating Audio Control & Quick Settings -->
+    <header class="floating-nav">
+      <button id="music-toggle" class="control-pill" title="เปิด/ปิดดนตรีกล่องเพลงหวานๆ">
+        <span class="music-icon" id="music-icon">🎵</span>
+        <span class="music-label">เสียงดนตรี</span>
+        <div class="equalizer" id="equalizer">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+      </button>
+
+      <button id="customize-btn" class="control-pill" title="แก้ไขชื่อและวันที่">
+        <span class="cog-icon">⚙️</span>
+        <span>แก้ไขข้อมูล</span>
+      </button>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-badge">💌 From My Heart To Yours 💌</div>
+      <h1 class="hero-title">
+        <span id="display-lover-name" class="highlight-name">พี่ฟ้า</span>
+        <span class="hero-subtitle-line">ขอบคุณที่เข้ามาทำให้ทุกวันของน้องเพชรมีความหมายน้าา</span>
+      </h1>
+      <p class="hero-quote">
+        "ตั้งแต่มีพี่ฟ้าเข้ามาในชีวิต โลกใบเดิมของน้องเพชรก็สดใสและมีความสุขขึ้นเยอะเลยครับ"
+      </p>
+
+      <!-- Couple Avatar / Heart Connector -->
+      <div class="couple-card">
+        <div class="avatar-box">
+          <div class="avatar-ring male-ring">
+            <span class="avatar-emoji">👦🏻</span>
+          </div>
+          <span class="avatar-name" id="display-my-name">เพชร</span>
+        </div>
+
+        <div class="heart-pulse-center">
+          <div class="pulsing-heart">💓</div>
+          <span class="infinite-symbol">✨</span>
+        </div>
+
+        <div class="avatar-box">
+          <div class="avatar-ring female-ring">
+            <span class="avatar-emoji">👧🏻</span>
+          </div>
+          <span class="avatar-name" id="display-lover-name-badge">พี่ฟ้า</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TALKING TIME COUNTER ==================== -->
+    <section class="section-container timer-section">
+      <div class="section-header">
+        <span class="section-tag">⏳ จุดเริ่มต้นของพวกเรา</span>
+        <h2 class="section-title">เรารู้จักและคุยกันมานานแค่ไหนแล้วนะ?</h2>
+        <p class="section-desc" id="display-anniv-date-text">เริ่มคุยกันตั้งแต่วันที่ 29 กรกฎาคม 2026</p>
+      </div>
+
+      <div class="timer-grid">
+        <div class="timer-card">
+          <div class="timer-num" id="timer-days">0</div>
+          <div class="timer-label">วัน</div>
+          <div class="timer-glow"></div>
+        </div>
+        <div class="timer-card">
+          <div class="timer-num" id="timer-hours">0</div>
+          <div class="timer-label">ชั่วโมง</div>
+          <div class="timer-glow"></div>
+        </div>
+        <div class="timer-card">
+          <div class="timer-num" id="timer-minutes">0</div>
+          <div class="timer-label">นาที</div>
+          <div class="timer-glow"></div>
+        </div>
+        <div class="timer-card pulse-card">
+          <div class="timer-num" id="timer-seconds">0</div>
+          <div class="timer-label">วินาที</div>
+          <div class="timer-glow"></div>
+        </div>
+      </div>
+
+      <p class="timer-footer">
+        ยิ่งได้รู้จักเธอมากขึ้นเท่าไหร่ หัวใจเค้าก็ยิ่งมั่นใจมากขึ้นเท่านั้น 💕
+      </p>
+    </section>
+
+    <!-- ==================== POLAROID PHOTO GALLERY (FOR PEE FAH) ==================== -->
+    <section class="section-container gallery-section">
+      <div class="section-header">
+        <span class="section-tag">📸 พื้นที่ความสดใส</span>
+        <h2 class="section-title">มุมน่ารักๆ ของพี่ฟ้า</h2>
+      </div>
+
+      <div class="polaroid-grid">
+        <!-- Photo 1 -->
+        <div class="polaroid-item rotate-left" data-index="0" data-caption="">
+          <div class="washi-tape tape-pink"></div>
+          <div class="polaroid-frame">
+            <div class="polaroid-img-wrapper empty" id="frame-0">
+              <img src="" alt="รูปพี่ฟ้า 1" class="polaroid-img hidden" id="img-0">
+              <div class="placeholder-box">
+                <span class="ph-icon">📷</span>
+                <span class="ph-text">+ คลิกเพื่อใส่รูปพี่ฟ้า</span>
+              </div>
+            </div>
+            <input type="file" class="single-photo-input" data-index="0" accept="image/*" style="display:none;">
+          </div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="polaroid-item rotate-right" data-index="1" data-caption="">
+          <div class="washi-tape tape-gold"></div>
+          <div class="polaroid-frame">
+            <div class="polaroid-img-wrapper empty" id="frame-1">
+              <img src="" alt="รูปพี่ฟ้า 2" class="polaroid-img hidden" id="img-1">
+              <div class="placeholder-box">
+                <span class="ph-icon">🌸</span>
+                <span class="ph-text">+ คลิกเพื่อใส่รูปพี่ฟ้า</span>
+              </div>
+            </div>
+            <input type="file" class="single-photo-input" data-index="1" accept="image/*" style="display:none;">
+          </div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="polaroid-item rotate-left-slight" data-index="2" data-caption="">
+          <div class="washi-tape tape-lavender"></div>
+          <div class="polaroid-frame">
+            <div class="polaroid-img-wrapper empty" id="frame-2">
+              <img src="" alt="รูปพี่ฟ้า 3" class="polaroid-img hidden" id="img-2">
+              <div class="placeholder-box">
+                <span class="ph-icon">☕</span>
+                <span class="ph-text">+ คลิกเพื่อใส่รูปพี่ฟ้า</span>
+              </div>
+            </div>
+            <input type="file" class="single-photo-input" data-index="2" accept="image/*" style="display:none;">
+          </div>
+        </div>
+
+        <!-- Photo 4 -->
+        <div class="polaroid-item rotate-right-slight" data-index="3" data-caption="">
+          <div class="washi-tape tape-rose"></div>
+          <div class="polaroid-frame">
+            <div class="polaroid-img-wrapper empty" id="frame-3">
+              <img src="" alt="รูปพี่ฟ้า 4" class="polaroid-img hidden" id="img-3">
+              <div class="placeholder-box">
+                <span class="ph-icon">✨</span>
+                <span class="ph-text">+ คลิกเพื่อใส่รูปพี่ฟ้า</span>
+              </div>
+            </div>
+            <input type="file" class="single-photo-input" data-index="3" accept="image/*" style="display:none;">
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+
+
+
+    <!-- ==================== LOVE LETTER SECTION ==================== -->
+    <section class="section-container letter-section">
+      <div class="section-header">
+        <span class="section-tag">📜 จดหมายจากใจ</span>
+        <h2 class="section-title">ข้อความที่อยากส่งถึงเธอ</h2>
+        <p class="section-desc">แตะที่ซองจดหมายเพื่อคลี่อ่านข้อความพิเศษ</p>
+      </div>
+
+      <div class="love-envelope-box" id="love-envelope">
+        <div class="envelope-top-flap"></div>
+        <div class="wax-seal-badge" id="wax-seal">
+          <span class="wax-seal-heart">💌</span>
+          <span class="wax-text">OPEN ME</span>
+        </div>
+        <div class="envelope-front">
+          <span class="envelope-to">ถึง: <strong id="letter-to-name">คนน่ารักที่สุดในโลก</strong></span>
+          <span class="envelope-from">จาก: <strong id="letter-from-name">คนที่รักเธอเสมอ</strong></span>
+        </div>
+      </div>
+
+      <!-- Love Letter Paper Container -->
+      <div class="letter-paper-wrapper hidden" id="letter-paper-wrapper">
+        <div class="vintage-paper">
+          <div class="paper-pin">📌</div>
+          <div class="paper-watermark">LOVE</div>
+          <h3 class="paper-greeting">ถึง <span id="paper-lover-name">เธอคนดี</span>,</h3>
+
+          <div class="typewriter-content" id="typewriter-content">
+            <!-- Dynamic typewriter text will load here -->
+          </div>
+
+          <div class="paper-closing">
+            <p class="closing-phrase">รักและคิดถึงเสมอ,</p>
+            <p class="closing-sign" id="paper-my-name">เค้าเอง ❤️</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== INTERACTIVE SWEET QUESTION ==================== -->
+    <section class="section-container question-section">
+      <div class="question-card">
+        <div class="question-emoji">💌✨</div>
+        <h2 class="question-title">ถามความในใจพี่ฟ้าหน่อยนะ...</h2>
+        <p class="question-subtitle">คุยกับน้องเพชรแล้วมีความสุขไหมครับ?
+          ให้น้องเพชรอยู่คุยและเป็นรอยยิ้มให้พี่ฟ้าแบบนี้ต่อไปนะ? 🥺💖</p>
+
+        <div class="question-actions" id="question-actions">
+          <button id="btn-yes" class="btn-love-yes">
+            <span>มีความสุขมาก! อยู่คุยกันต่อไปนะ 🥰✨</span>
+          </button>
+
+          <button id="btn-no" class="btn-love-no">
+            <span>ไม่ให้คุยแล้ว แบร่ 😜</span>
+          </button>
+        </div>
+
+        <div id="no-reaction-bubble" class="reaction-bubble hidden">
+          <span>แน่ะ! จะไม่ให้คุยเหรอ? ปุ่มนี้ล็อกไว้แล้วจ้าา อิอิ 😝</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="romantic-footer">
+      <p class="footer-text">
+        Made with all my heart for <span id="footer-lover-name">พี่ฟ้า</span> 💖
+      </p>
+      <p class="footer-sub">เริ่มคุยกันตั้งแต่วันที่ 29 กรกฎาคม ขอบคุณที่มีพี่ฟ้าอยู่ในทุกๆ วันนะ</p>
+    </footer>
+
+  </div> <!-- End #main-content -->
+
+  <!-- ==================== PHOTO LIGHTBOX MODAL ==================== -->
+  <div id="lightbox-modal" class="modal-overlay hidden">
+    <div class="lightbox-content">
+      <button class="modal-close" id="lightbox-close">&times;</button>
+      <img id="lightbox-img" src="" alt="Enlarged photo">
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- ==================== CELEBRATION MODAL ==================== -->
+  <div id="celebration-modal" class="modal-overlay hidden">
+    <div class="celebration-box">
+      <div class="celebration-fireworks">🎆🎉</div>
+      <div class="big-kiss-emoji">🥰✨</div>
+      <h2 class="celebration-title">เย้!! ขอบคุณนะครับพี่ฟ้า! ❤️</h2>
+      <p class="celebration-text">
+        น้องเพชรสัญญาว่าจะคอยเป็นรอยยิ้ม คอยรับฟัง และคอยเป็นกำลังใจให้พี่ฟ้าเสมอ<br>
+        วันไหนพี่ฟ้าเหนื่อย วันไหนท้อ หันมาก็จะเจอน้องเพชรอยู่ตรงนี้ตลอดเลยน้าาา 🌸<br>
+        <strong>ขอบคุณที่เข้ามาเป็นเรื่องราวดีๆ ให้น้องเพชรนะครับ อิอิ ✨</strong>
+      </p>
+      <div class="celebration-hearts">💖 🌸 💓 ✨ 💗</div>
+      <button class="celebration-close-btn" id="celebration-close">ยิ้มหวานให้น้องเพชรหนึ่งที 😊💕</button>
+    </div>
+  </div>
+
+  <!-- ==================== CUSTOMIZE MODAL ==================== -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="settings-box">
+      <div class="settings-header">
+        <h3>⚙️ ปรับแต่งข้อมูลส่วนตัว</h3>
+        <button class="modal-close" id="settings-close">&times;</button>
+      </div>
+      <p class="settings-desc">แก้ไขชื่อและวันครบรอบได้ที่นี่ ข้อมูลจะถูกบันทึกไว้ในเครื่องของคุณทันที</p>
+
+      <form id="settings-form" class="settings-form">
+        <div class="form-group">
+          <label for="input-my-name">ชื่อของคุณ (หรือฉายา):</label>
+          <input type="text" id="input-my-name" placeholder="เช่น เพชร, เค้าเอง" required>
+        </div>
+
+        <div class="form-group">
+          <label for="input-lover-name">ชื่อแฟนของคุณ (หรือฉายาน่ารักๆ):</label>
+          <input type="text" id="input-lover-name" placeholder="เช่น ตัวเล็ก, ที่รัก, น้องอ้วน" required>
+        </div>
+
+        <div class="form-group">
+          <label for="input-anniv-date">วันที่เริ่มคบกัน (วันครบรอบ):</label>
+          <input type="date" id="input-anniv-date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="input-custom-letter">ข้อความในจดหมายรัก:</label>
+          <textarea id="input-custom-letter" rows="5" placeholder="พิมพ์ข้อความในใจที่อยากบอกแฟนที่นี่..."></textarea>
+        </div>
+
+        <div class="settings-buttons">
+          <button type="button" class="btn-secondary" id="reset-default-btn">ใช้ค่าเริ่มต้น</button>
+          <button type="submit" class="btn-primary">💾 บันทึกข้อมูล</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Canvas for Heart Fireworks & Confetti -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
